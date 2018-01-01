@@ -36,3 +36,21 @@ nnoremap <silent> <C-J>b :TmuxNavigatePrevious<CR>
 set background=light
 colorscheme PaperColor
 highlight LineNr guifg=#cccccc
+
+augroup Writing
+  au!
+  au Filetype text call SetWritingOptions()
+augroup END
+
+augroup RestoreCursorPositionGroup
+  au!
+  " Save window position when leaving buffers
+  au BufLeave * let b:winview = winsaveview()
+  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+augroup END
+
+function SetWritingOptions()
+  set spell spelllang=en_us
+  Goyo
+  HardPencil
+endfunction
