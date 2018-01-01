@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 set backspace=indent,eol,start
 set clipboard=unnamed
 set hidden
@@ -38,6 +40,8 @@ nmap <SPACE>t :Files<CR>
 nmap <SPACE><TAB> :b#<CR>
 nmap <SPACE>u :PlugUpdate<CR>
 nmap <SPACE>fr :History<CR>
+nnoremap <SPACE><SPACE> :'{,'}s/\<<C-R><C-W>\>//g<LEFT><LEFT>
+nnoremap <SPACE>% :%s/\<<C-R><C-W>\>//g<LEFT><LEFT>
 
 nnoremap <C-J> <C-W>
 nnoremap <C-J>x <C-W>q
