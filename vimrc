@@ -2,7 +2,6 @@ scriptencoding utf-8
 
 set backspace=indent,eol,start
 set clipboard=unnamed
-set hidden
 set history=1000
 set hlsearch
 set ignorecase
@@ -27,11 +26,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/goyo.vim'
   Plug 'NLKNguyen/papercolor-theme'
   Plug 'reedes/vim-pencil'
-  Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-repeat'
-  Plug 'tpope/vim-rsi'
-  Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-unimpaired'
 call plug#end()
 
 nmap <SPACE>b :Buffer<CR>
@@ -53,7 +47,6 @@ nnoremap <silent> <C-J>b :TmuxNavigatePrevious<CR>
 
 set background=light
 colorscheme PaperColor
-highlight LineNr guifg=#cccccc
 
 augroup Writing
   au!
@@ -93,7 +86,7 @@ endfunction
 function! s:goyo_enter()
   let b:quitting = 0
   let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
+  au QuitPre <buffer> let b:quitting = 1
   cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
 endfunction
 
@@ -108,5 +101,8 @@ function! s:goyo_leave()
   endif
 endfunction
 
-autocmd! User GoyoEnter call <SID>goyo_enter()
-autocmd! User GoyoLeave call <SID>goyo_leave()
+augroup Goyo
+  au!
+  au! User GoyoEnter call <SID>goyo_enter()
+  au! User GoyoLeave call <SID>goyo_leave()
+augroup END
