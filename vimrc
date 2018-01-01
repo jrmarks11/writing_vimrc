@@ -1,6 +1,20 @@
 set backspace=indent,eol,start
 set clipboard=unnamed
+set hidden
+set history=1000
+set hlsearch
+set ignorecase
+set incsearch
+set list
+set listchars=tab:▸\ ,trail:·,nbsp:␣
 set nocompatible
+set noerrorbells
+set smartcase
+set undodir=$HOME/.vim-undo
+set undofile
+set undolevels=1000
+set undoreload=10000
+set visualbell
 
 call plug#begin('~/.vim/plugged')
   Plug 'christoomey/vim-tmux-navigator'
@@ -39,7 +53,7 @@ highlight LineNr guifg=#cccccc
 
 augroup Writing
   au!
-  au Filetype text call SetWritingOptions()
+  au Filetype text,markdown,mkd,md call SetWritingOptions()
 augroup END
 
 augroup RestoreCursorPositionGroup
@@ -47,6 +61,23 @@ augroup RestoreCursorPositionGroup
   " Save window position when leaving buffers
   au BufLeave * let b:winview = winsaveview()
   au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+augroup END
+
+augroup MyFormatting
+  au!
+  " Remove extra newlines and trailng whitspace when saving
+  au BufWritePre * : %s/\n\n\n\+//e | %s/\s\+$//e
+augroup END
+
+augroup autoSaveAndRead
+  autocmd!
+  autocmd TextChanged,InsertLeave,FocusLost * silent! wall
+  autocmd CursorHold *                        silent! checktime
+augroup END
+
+augroup autoResize
+  au!
+  au VimResized * wincmd =
 augroup END
 
 function SetWritingOptions()
